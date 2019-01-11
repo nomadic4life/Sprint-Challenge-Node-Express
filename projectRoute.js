@@ -25,6 +25,18 @@ router.get('/:id', (req, res, next) => {
   
 })
 
+router.get('/actions/:id', (req, res, next) => {
+
+  // probably want to check if project id exist
+  const {id} = req.params;
+
+  projectModel.getProjectActions(id)
+  .then(actionList => {
+    res.status(200).json(actionList);
+  })
+  .catch(err => res.status(500).json(err));
+})
+
 router.post('/', testCharLimit, (req, res, next) => {
 
   console.log('here?' )

@@ -28,8 +28,6 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', testCharLimit, (req, res, next) => {
 
-  console.log('here?' )
-
   let {project_id, description, notes, completed} = req.body;
   description = description ? description : '';
 
