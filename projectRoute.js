@@ -39,8 +39,6 @@ router.get('/actions/:id', (req, res, next) => {
 
 router.post('/', testCharLimit, (req, res, next) => {
 
-  console.log('here?' )
-
   let {name, description, completed} = req.body;
   description = description ? description : '';
 
@@ -50,6 +48,37 @@ router.post('/', testCharLimit, (req, res, next) => {
   })
   .catch(err => res.status(500).json(err));
 
+})
+
+router.put('/:id', testCharLimit, (req, res, next) => {
+
+  const {id} = req.params;
+  const {name, description, completed} = req.body;
+
+  console.log( id, name, description,completed)
+
+  // may be bug wit update method just returns empty object, doesn't indicate if updated was successful
+  projectModel.update(id, {name, description, completed})
+  .then(project => {
+    if(projects){
+      res.status(201).json(project);
+    } else res.status(404).json({errorMessage: "project not found"})
+  })
+  .catch(err => res.status(500).json(err));
+
+})
+
+router.delete('/:id', (req, res, next) => {
+  const {id} = req.params;
+
+  projectModel.remove(id)
+  .then(count => {
+    if(count) {
+      res.status(204).end()
+    } else{
+      res.status(404).json({errorMessage: "delete could not be completed, id not found"})
+    }
+  })
 })
 
 module.exports = router;
