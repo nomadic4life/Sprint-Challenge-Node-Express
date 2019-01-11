@@ -1,9 +1,14 @@
 const express = require('express');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const cors = require('cors');
+
 const projectRoute = require('./projectRoute.js');
 const actionRoute = require('./actionRoute.js');
 
 const server = express();
 
+server.use(cors(),morgan("short"),helmet());
 server.use(express.json());
 server.use('/projects', projectRoute);
 server.use('/actions', actionRoute);
