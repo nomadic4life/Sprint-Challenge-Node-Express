@@ -26,4 +26,18 @@ router.get('/:id', (req, res, next) => {
   
 })
 
+router.post('/', testCharLimit, (req, res, next) => {
+
+  console.log('here?' )
+
+  let {project_id, description, notes, completed} = req.body;
+  description = description ? description : '';
+
+  actionModel.insert({project_id, description, notes, completed})
+  .then(project => {
+    res.status(201).json(project);
+  })
+  .catch(err => res.status(500).json(err));
+
+})
 module.exports = router;

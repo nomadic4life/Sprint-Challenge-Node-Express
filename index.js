@@ -4,6 +4,7 @@ const actionRoute = require('./actionRoute.js');
 
 const server = express();
 
+server.use(express.json());
 server.use('/projects', projectRoute);
 server.use('/actions', actionRoute);
 

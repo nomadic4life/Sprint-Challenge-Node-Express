@@ -27,16 +27,16 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', testCharLimit, (req, res, next) => {
 
-  console.log('here?')
+  console.log('here?' )
 
-  const {name, description, completed} = req.body;
+  let {name, description, completed} = req.body;
   description = description ? description : '';
 
   projectModel.insert({name, description, completed})
   .then(project => {
     res.status(201).json(project);
   })
-  .catch(err => next(err))
+  .catch(err => res.status(500).json(err));
 
 })
 
